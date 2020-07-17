@@ -25,7 +25,6 @@ DevSecOps involves utilizing security best practices from the beginning of devel
 
 1. Developers accessing GitHub resources are redirected to Azure AD for authentication using the SAML protocol. The organization enforces Single Sign-On (SSO) using FIDO2 strong authentication with the Microsoft Authenticator app
 1. Developers access a Codespace (a prebuilt development environment) to begin working on tasks. The Codespace is a container that contains their IDE, all necessary dependencies, and any required security scanning tools installed
-1. Developers make changes to local git clones of projects, and commit their changes back to the GitHub code repository. Developer teams manage projects, tasks, and progress using Project Boards
 1. When new code is committed, GitHub Actions can initiate code scanning to quickly and automatically find vulnerabilities and coding errors
 1. Pull Requests trigger CI builds and automated testing using GitHub Actions. Secrets and credentials are encrypted at rest and obfuscated in log entries
 1. The CI build in GitHub Actions builds the project and deploys it to App Service, while making changes to other cloud resources like service endpoints  
