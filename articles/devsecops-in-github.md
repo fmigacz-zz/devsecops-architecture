@@ -30,7 +30,7 @@ DevSecOps involves utilizing security best practices from the beginning of devel
 1. GitHub Actions deploys the build artifacts to App Service, while making changes to other cloud resources like service endpoints  
 1. Azure Policy evaluates the Azure resources in the deployment and potentially denies the release, modifies the cloud resources, or creates warning events in the activity log
 1. Azure Security Center identifies attacks targeting applications running in this project's deployments 
-1. Continuous monitoring with Azure Monitor can revert (rollback) a commit based on monitoring data
+1. Continuous monitoring with Azure Monitor can revert (rollback) to a previous commit based on monitoring data
 
 ## Components
 
@@ -51,20 +51,19 @@ DevSecOps involves utilizing security best practices from the beginning of devel
 GitHub security will attempt to identify and update any vulnerable dependencies in a repository. It will check whenever the following events occur:
 * A new vulnerability is entered into the [GitHub Advisory Database](https://docs.github.com/en/github/managing-security-vulnerabilities/browsing-security-vulnerabilities-in-the-github-advisory-database)
 * A new vulnerability notification appears from the third-party service, [WhiteSource](https://resources.whitesourcesoftware.com/blog-whitesource/github-security-updates)
-* A repository's dependencies change
+* A repository's dependencies change (e.g., changing a project from .NET to .NET Core)
 
 A *vulnerability*, when identified, causes the following data flow:
 ![Data Flow Diagram](../media/devsecops-in-github-vulnerability-management.png)
 *Download an [SVG](../media/devsecops-in-github-vulnerability-management.svg) of this diagram.*
 
 1. An email alert is sent to the organization owners and repository admins
-1. GitHub [Dependabot](), a DevOps bot agent, will perform the following three (3) tasks automatically:
+1. GitHub Dependabot, a DevOps bot agent, will perform the following three (3) tasks automatically:
 1. Create a new branch in the repository
 1. Upgrade the necessary dependencies to the minimum possible secure version needed to avoid the vulnerability
 1. Create a Pull Request (PR) with the upgraded dependency
 1. When the PR is approved, the new branch is merged with the base branch
-1. The merged branch triggers a GitHub Action to to perform its CI/CD tasks
-1. The CI/CD tasks are performed and the new app version is deployed to a Test or Staging environment  
+1. The merged branch triggers GitHub Actions to perform its CI/CD tasks
+1. The CI/CD tasks are performed and the new app version is deployed to a Test or Staging environment 
 
-## Code Rollback
 
