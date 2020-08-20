@@ -66,4 +66,26 @@ A *vulnerability*, when identified, causes the following data flow:
 1. The merged branch triggers GitHub Actions to perform its CI/CD tasks
 1. The CI/CD tasks are performed and the new app version is deployed to a Test or Staging environment 
 
+## Tenets of the Azure Well-Architected Framework
+The [Azure Well-Architected Framework](azure/architecture/framework/) is a set of guiding tenets that can be used to improve the quality of a workload. The framework consists of five pillars of architecture excellence: Cost Optimization, Operational Excellence, Performance Efficiency, Reliability, and Security.
+
+Cost Optimization
+* GitHub Actions is billed by the minute. The per-minute consumption rate and per-minute cost are both affected by the choice of operating system used to host Actions jobs. Wherever possible, choose Linux to host your Actions. See [About billing for GitHub Actions](https://docs.github.com/en/github/setting-up-and-managing-billing-and-payments-on-github/about-billing-for-github-actions)
+
+Operational Excellence
+* It is best to have automated tests and maintenance running in your environment. Especially with the Vulnerability Management capabilities, which can change your code (or its dependencies) on your behalf. Automated testing will identify issues with these changes
+* Azure Policy can do more than just deny your deployments or log compliance issues. It can modify your resources to become compliant, even if they aren't deployed that way. For example, if you try to deploy a storage account in Azure that listens to HTTP, Azure Policy can automatically change the deployment and force the storage account to only listen to HTTPS
+* Azure Resource Manager uses JSON templates to describe the resources involved in a deployment. These template documents can also by managed by teams using DevOps tools (like version control, code collaboration, and CI/CD workflows)
+
+Performance Efficiency
+* For long-running or complex Actions, consider hosting your own "runners"> GitHub runners are the computers that host CI/CD jobs. Using your own hosted runners, you can use computers with more processing power or memory. See [About self-hosted runners](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners)
+
+Reliability
+* GitHub Enterprise Server can run in a highly available failover configuration. Self-hosted Actions runners can also be distributed geographically. See [About high availability configuration](https://docs.github.com/en/enterprise/2.21/admin/enterprise-management/about-high-availability-configuration)
+
+Security
+* Using self-hosted Actions runners for public repositories is not advised. A malicious user could join your repo and create a pull request that runs untrusted code on computers in your network. Using GitHub-hosted runners prevents this risk
+* Scan your code using the CodeQL analysis engine. CodeQL can discover potential vulnerabilities and coding errors on a schedule, and/or when events occur (like a commit or a pull request). See [About code scanning](https://docs.github.com/en/github/finding-security-vulnerabilities-and-errors-in-your-code/about-code-scanning)
+* Dependabot security updates remove a lot risk from using known exploits in your projects. Make sure to configure them, see [Configuring GitHub Dependabot security updates](https://docs.github.com/en/github/managing-security-vulnerabilities/configuring-github-dependabot-security-updates)
+
 
